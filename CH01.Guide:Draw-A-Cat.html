@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<svg width="140" height="170">
+  <title>CH01.Draw A Cat</title>
+  <desc>Stick Figure of a Cat</desc>
+
+  <circle cx="70" cy="95" r="50" style="stroke: black; fill: none"/>
+  <circle cx="55" cy="80" r="5" stroke="black" fill="#030220"/>
+  <circle cx="85" cy="80" r="5" stroke="black" fill="#339933"/>
+
+  <g id="whiskers">
+  <line x1="75" y1="95" x2="135" y2="85" style="stroke: blue;"/>
+  <line x1="75" y1="95" x2="135" y2="105" style="stroke: blue;"/>
+  </g>
+
+  <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)"/>
+
+  <!-- ears -->
+  <polyline points="108 62,  110 20,  70 45,  30, 20,  32, 62" style="stroke: red; fill: none;" />
+  <!-- mouth -->
+  <polyline points="35 110, 45 120, 95 120, 105, 110" style="stroke: pink; fill: none;" />
+
+  <!-- nose -->
+  <path d="M 75 90 L 65 90 A 5 10 0  0 0 75 90"
+        style="stroke: black; fill: #ffcccc"/>
+
+  <text x="55" y="170" style="font-family: sans-serif; font-size: 14pt;
+  stroke: yellow; fill: red;">Cat</text>
+
+</svg>
