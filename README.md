@@ -18,5 +18,5 @@ The Code will be synchronized with my [collection](http://codepen.io/collection/
 - Chapter 12. Animating SVG
 - Chapter 13. Adding Interactivity
 - Chapter 14. Using the SVG DOM
-- Chapter 15. Generating SVG
+- Chapter 15. Generating SVG 
 
