@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 7. Paths</title>
+  <style>
+    svg {
+      background: lightblue;
+      border: thick double navy;
+    }
+  </style>
+</head>
+<body>
+ <!--M L -->
+<svg width="150px" height="150px" viewBox="0 0 150 150">
+  <g style="stroke: black; fill: none;">
+    <!-- single line -->
+    <path d="M 10 10 L 100 10" />
+
+    <!-- a right angle -->
+    <path d="M 10, 20  L 100, 20  L  100,50" />
+
+    <!-- two thirty-degree angles -->
+    <path d="M 40 60 L 10, 60 L 40 42.68
+    M 60, 60 L 90 60 L 60 42.68 Z" />
+  </g>
+</svg>
+
+<svg width="150px" height="150px" viewBox="0 0 150 150">
+  <path d="M30 30L 55 5L80 30L55 55Z" />
+</svg>
+
+<svg width="150px" height="150px" viewBox="0 0 150 150">
+  <path d="M12 24h15v25h-15Z" />
+</svg>
+
+<!---------------------arcs----------------------->
+<svg width="400px" height="300px" viewBox="0 0 400 300">
+  <ellipse cx="154" cy="154" rx="150" ry="120" style="fill:#999;" />
+  <ellipse cx="152" cy="152" rx="150" ry="120" style="fill:#cceeff;" />
+  <path d="M302 152A150 120, 0, 1, 0,2 152A75 60, 0, 1, 0, 152 152" style="fill:#ffcccc;" />
+  <path d="M152 152A75 60, 0, 1, 1,302 152" style="fill:#cceeff;" />
+</svg>
+
+
+<!--------------------marker --------------------->
+<svg width="150px" height="150px" viewBox="0 0 150 150">
+  <defs>
+    <marker id="mCircle" markerWidth="10" markerHeight="10"
+            refx="5" refy="5">
+      <circle cx="5" cy="5" r="4" style="fill:none; stroke: black;"/>
+    </marker>
+    <marker id="mArrow" markerWidth="4" markerHeight="8"
+            refx="0" refy="4" orient="auto">
+      <path d="M 0 0 4 4 0 8" style="fill:none; stroke: black;"/>
+    </marker>
+    <marker id="mTriangle" markerWidth="5" markerHeight="10"
+            refx="5" refy="5" orient="auto">
+      <path d="M 0 0 5 5 0 10 Z" style="fill: black;"/>
+    </marker>
+  </defs>
+  <path d="M 10 20 100 20 A 20 30 0 0 1 120 50 L 120 110"
+        style="marker-start: url(#mCircle); 
+               marker-mid: url(#mArrow);
+               marker-end: url(#mTriangle);
+               fill:none; stroke: black;"/>
+  <path d="M 10 40 100 40 A 20 30 0 0 1 100 70 L 100 110"
+        style="marker: url(#mCircle); 
+               fill:none; stroke: black;"/>
+</svg> 
+</body>
+</html>
