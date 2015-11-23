@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chapter 8. Patterns and Gradients</title>
+    <style>
+        svg {
+          background-color: lightblue;
+          border: thick double navy;
+        }
+    </style>
+  </head>
+  <body>
+    <svg width="250" height="200" viewBox="50 0 250 350"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+      <pattern id="tile" x="0" y="0" width="20%" height="20%"
+                                                 patternUnits="objectBoundingBox">
+      <!--20 x 20-->
+      <path d="M 0 0 Q 5 20 10 10 T  20 20"
+            style="stroke: black; fill: none;"/>
+      <path d="M 0 0 h20 v20 h-20 z"
+            style="fill: none; stroke: gray;"/>
+      </pattern>
+      <!--patternUnits="userSapceOnUse"-->
+      <pattern id="tile2" x="0" y="0" width="20" height="20"
+                                                 patternUnits="userSpaceOnUse">
+      <!--20 x 20-->
+      <path d="M 0 0 Q 5 20 10 10 T  20 20"
+            style="stroke: black; fill: none;"/>
+      <path d="M 0 0 h20 v20 h-20 z"
+            style="fill: none; stroke: gray;"/>
+      </pattern>
+
+      <!--viewBox-->
+      <pattern id="tile3" x="0" y="0" width="20" height="20"
+                                                 patternUnits="userSpaceOnUse"
+                                                 viewBox="0 0 40 40">
+      <!--20 x 20-->
+      <path d="M 0 0 Q 5 20 10 10 T  20 20"
+            style="stroke: black; fill: none;"/>
+      <path d="M 0 0 h20 v20 h-20 z"
+            style="fill: none; stroke: gray;"/>
+      </pattern>
+      </defs>
+
+      <rect x="20" y="20" width="100" height="100"
+                                      style="fill:url(#tile2); stroke: yellow;" />
+      <rect x="20" y="150" width="100" height="100"
+                                       style="fill:url(#tile3); stroke: purple;" />
+      <rect x="135" y="20" width="70" height="80"
+                                      style="fill:url(#tile); stroke: green;" />
+      <rect x="135" y="120" width="70" height="80"
+                                       style="fill:url(#tile2); stroke: blue;" />
+      <rect x="220" y="20" width="150" height="130"
+                                       style="fill:url(#tile); stroke: pink;" />
+      <rect x="220" y="170" width="150" height="130"
+                                        style="fill:url(#tile2); stroke: orange;" />
+    </svg>
+
+    <!-------------pattern import---------------->
+    <svg width="250" height="200" viewBox="0 0 250 200">
+      <defs>
+      <pattern id="stripe"
+               patternUnits="userSpaceOnUse"
+               x="0" y="0" width="6" height="6">
+      <path d="M 0 0 6 0"
+            style="stroke:black; fill:none;" />
+      </pattern>
+      <pattern id="polkadot"
+               patternUnits="userSpaceOnUse"
+               x="0" y="0" width="36" height="36">
+      <circle cx="12" cy="12" r="12"
+                              style="fill:url(#stripe); stroke:black;"/>
+      </pattern>
+      </defs>
+      <rect x="36" y="36" width="100" height="100"
+                                      style="fill:url(#polkadot); stroke:black;"/>
+    </svg>
+
+
+    <!-------------------Gradient-------------------->
+    <svg width="250" height="150" viewBox="0 0 250 150"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+      <defs>
+      <linearGradient id="three_hues">
+      <stop offset="0%" style="stop-color: #ffcc00;"/>
+      <stop offset="50%" style="stop-color: #0099cc;"/>
+      <stop offset="100%" style="stop-color: #ee99ff;"/>
+      </linearGradient>
+      </defs>
+
+      <rect x="20" y="20" width="200" height="100"
+      style="fill: url(#three_hues);  stroke: black;"/>
+    </svg>
+
+    <!----opacity---->
+    <svg width="250" height="150" viewBox="0 0 250 150"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+      <linearGradient id="three_opacity_stops">
+      <stop offset="0%" style="stop-color: #906; stop-opacity: 1.0"/>
+      <stop offset="50%" style="stop-color: #906; stop-opacity: 0.3"/>
+      <stop offset="100%" style="stop-color: #906; stop-opacity: 0.10"/>
+      </linearGradient>
+      </defs>
+
+      <rect x="20" y="20" width="200" height="100"
+      style="fill: url(#three_opacity_stops); stroke: black;"/>
+    </svg>
+
+
+
+
+    <!--------radial gradient--------->
+    <svg width="150" height="150" viewBox="0 0 150 150"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+      <radialGradient id="three_stops">
+      <stop offset="0%" style="stop-color: blue;"/>
+      <stop offset="50%" style="stop-color: yellow;"/>
+      <stop offset="100%" style="stop-color: red;"/>
+      </radialGradient>
+      </defs>
+
+      <rect x="20" y="20" width="100" height="100"
+      style="fill: url(#three_stops); stroke: black;"/>
+    </svg>
+  </body>
+</html>
