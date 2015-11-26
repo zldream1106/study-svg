@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chapter 11. Filters</title>
+    <style>
+      svg {
+        background: #aaa;
+        border: thick double navy;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <!------flower--------->
+      <defs>
+      <g id="petal">
+      <path d="M 10 0 Q 27 -15 40 0 27 15 10 0" />
+      </g>
+      <g id="flower">
+      <path d="M 50 50 Q 40 70, 70 100 T 70 150" style="stroke: green; fill: none; stroke-width: 3;" />
+      <path d="M 70 100 Q 80 70, 120 80, 90 75, 75 105" style="stroke: none; fill: green;" />
+      <circle cx="40" cy="50" r="10" style="fill: gray;" />
+      <g style="stroke: black; fill: yellow;">
+      <use xlink:href="#petal" transform="translate(40,50)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(40)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(80)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(120)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(160)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(200)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(240)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(280)" />
+      <use xlink:href="#petal" transform="translate(40,50) rotate(320)" />
+      </g>
+      </g>
+
+      <filter id="drop-shadow1">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+      </filter>
+      <filter id="drop-shadow2">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur" />
+      <feMerge>
+      <feMergeNode in="offsetBlur" />
+      <feMergeNode in="SourceGraphic" />
+      </feMerge>
+      </filter>
+      <filter id="glow">
+      <feColorMatrix type="matrix" values="
+      0 0 0 0   0
+      0 0 0 0.4 0
+      0 0 0 0   0
+      0 0 0 1   0" />
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+      <feMerge>
+      <feMergeNode in="coloredBlur" />
+      <feMergeNode in="SourceGraphic" />
+      </feMerge>
+      </filter>
+      </defs>
+
+      <g id="flower1">
+      <use xlink:href="#flower" filter="url(#drop-shadow1)" transform="translate(4,4)" />
+      <use xlink:href="#flower" />
+      </g>
+      <g id="flower2" transform="translate(150,0)" filter="url(#drop-shadow2)">
+      <use xlink:href="#flower" />
+      </g>
+
+      <text x="300" y="20" stroke="red" filter="url(#drop-shadow1)">
+        Spring flower
+      </text>
+      <text x="300" y="20" stroke="red">
+        Spring flower
+      </text>
+      <text x="300" y="40" stroke="red" filter="url(#drop-shadow2)">
+        Spring flower
+      </text>
+      <text x="300" y="60" stroke="red" filter="url(#glow)">
+        Spring flower
+      </text>
+    </svg>
+
+
+    <!----------------------feColorMatrix--------------------->
+    <svg width="500" height="150" viewBox="0 0 200 200">
+      <title>Result of saturate on primary colors</title>
+      <defs>
+      <filter id="rotate" filterUnits="objectBoundingBox">
+      <feColorMatrix type="hueRotate" values="45" />
+      <feColorMatrix type="saturate" values="1" />
+      </filter>
+      <filter id="s1" filterUnits="objectBoundingBox">
+      <feColorMatrix type="saturate" values="0.5" />
+      </filter>
+      <filter id="l1" filterUnits="objectBoundingBox">
+      <feColorMatrix type="luminanceToAlpha" />
+      </filter>
+
+      <g id="squares">
+      <rect id="red" x="0" y="0" width="30" height="30" style="fill: #f00;" />
+      <rect id="green" x="40" y="0" width="30" height="30" style="fill: #0f0;" />
+      <rect id="blue" x="80" y="0" width="30" height="30" style="fill: #00f;" />
+      <rect id="yellow" x="120" y="0" width="30" height="30" style="fill: #ff0;" />
+      <rect id="magenta" x="160" y="0" width="30" height="30" style="fill: #f0f;" />
+      <rect id="cyan" x="200" y="0" width="30" height="30" style="fill: #0ff;" />
+      </g>
+      </defs>
+
+      <g style="font-size: 10pt; text-anchor: end;">
+      <text x="-50" y="75">Rotate</text>
+      <text x="5" y="35">0°</text>
+      <text x="5" y="75">45°</text>
+      <text x="-50" y="115">saturate</text>
+      <text x="5" y="115">0.5</text>
+      <text x="-50" y="155" text-anchor="middle">luminanceToAlpha</text>
+      </g>
+
+      <g transform="translate( 50, 10 )">
+      <use xlink:href="#squares" />
+      </g>
+
+      <g transform="translate( 50, 50 )">
+      <use xlink:href="#squares" style="filter: url(#rotate);" />
+      </g>
+
+      <g transform="translate( 50, 90 )">
+      <use xlink:href="#squares" style="filter: url(#s1);" />
+      </g>
+
+      <g transform="translate( 50, 130 )">
+      <use xlink:href="#squares" style="filter: url(#l1);" />
+      </g>
+    </svg>
+
+    <!----------------------feImage------------------------->
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <filter id="sky-shadow" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <feGaussianBlur in="SourceAlpha" stDeviation="2" result="blur" />
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur" />
+      <feMerge>
+      <feMergeNode in="sky" />
+      <feMergeNode in="offsetBlur" />
+      <feMergeNode in="SourceGraphic" />
+      </filter>
+
+      <filter id="brightness-shadow" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <feComponentTransfer in="sky" result="sky">
+      <feFuncB type="linear" slope="3" intercept="0" />
+      <feFuncR id="funcR" type="linear" slope="1.5" intercept="0.2" />
+      <feFuncG id="funcG" type="linear" slope="1.5" intercept="0.2 " />
+      </feComponentTransfer>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur" />
+      <feMerge>
+      <feMergeNode in="sky" />
+      <feMergeNode in="offsetBlur" />
+      <feMergeNode in="SourceGraphic" />
+      </feMerge>
+      </filter>
+
+      <filter id="brightness-shadow2" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <feComponentTransfer in="sky" result="sky">
+      <feFuncB type="gamma" amplitude="1" exponent="0.2" offset="0"></feFuncB>
+      <feFuncR type="gamma" amplitude="1" exponent="0.707" offset="0">
+      </feFuncG>
+      <feFuncG type="gamma" amplitude="1" exponent="0.707" offset="0"></feFuncG>
+      </feComponentTransfer>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur" />
+      <feMerge>
+      <feMergeNode in="sky" />
+      <feMergeNode in="offsetBlur" />
+      <feMergeNode in="SourceGraphic" />
+      </feMerge>
+      </filter>
+
+      <g id="flower2" style="filter: url(#sky-shadow) ">
+      <use xlink:href="#flower" x="0" y="0" width="150" height="200" />
+      </g>
+      <g id="flower3" style="filter: url(#brightness-shadow) ">
+      <use xlink:href="#flower" x="150" y="0" width="150" height="200" />
+      </g>
+      <g id="flower4" style="filter: url(#brightness-shadow2) ">
+      <use xlink:href="#flower" x="300" y="0" width="150" height="200" />
+      </g>
+    </svg>
+
+    <!--------------------feComposite in & out------------------->
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <filter id="sky-in" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <feComposite in="sky" in2="SourceGraphic" operator="in" />
+      </filter>
+      <filter id="sky-out" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <feComposite in="sky" in2="SourceGraphic" operator="out" />
+      </filter>
+      <filter id="sky-feblend" filterUnits="objectBoundingBox">
+      <feImage xlink:href="http://oreillymedia.github.io/svg-essentials-examples/ch11/sky.jpg" result="sky" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" />
+      <!--normal, multiply, screen, darken,lighten--->
+      <feBlend in="sky" in2="SourceGraphic" mode="darken" />
+      </filter>
+
+
+      <use xlink:href="#flower" x="0" y="0" style="filter:url(#sky-in);" />
+      <use xlink:href="#flower" x="150" y="0" style="filter:url(#sky-out);" />
+      <use xlink:href="#flower" x="300" y="0" style="filter:url(#sky-feblend);" />
+    </svg>
+
+
+    <!------------------------ feFlood & feTile--------------------------->
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <defs>
+      <filter id="flood-filter" x="0" y="0" width="100%" height="100%">
+      <feFlood flood-color="#993300" flood-opacity="0.8" result="tint" />
+      <feComposite in="tint" in2="SourceGraphic" operator="in" />
+      </filter>
+      <filter id="tile-filter" x="0" y="0" width="100%" height="100%">
+      <feImage xlink:href="http://gw.alicdn.com/bao/uploaded/TB13pe5JVXXXXb7XXXXXXXXXXXX-600-399.jpg" width="32" height="32" result="cloth" />
+      <feTile in="cloth" in2="SourceGraphic" operator="in" />
+      <feComposite in="tint" in2="SourceGraphic" operator="in" />
+      </filter>
+
+      <!--feDiffuseLighting ??? why is it black?-->
+      <path id="curve" d="M 0 0 Q 5 20 10 10 T 20 20" style="stroke: black; fill:none;" />
+      <filter id="diff-light" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feImage xlink:href="#curve" result="tile" width="20" height="20" />
+      <feTile in="tile" result="tile" />
+
+      <feDiffuseLighting in="tile" lighting-color="#ffffcc" surfaceScale="1" diffuseConstant="0.5" result="diffuseOutput">
+      <fePointLight x="0" y="50" z="50" />
+      </feDiffuseLighting>
+
+      <feComposite in="diffuseOutput" in2="SourceGraphic" operator="in" result="diffuseOutput" />
+      <feBlend in="diffuseOutput" in2="SourceGraphic" mode="screen" />
+      </filter>
+
+      <!--feSpecularLighting-->
+      <filter id="spec-light" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feImage xlink:href="#curve" result="tile" width="20" height="20" />
+      <feTile in="tile" result="tile" />
+
+      <feSpecularLighting in="tile" lighting-color="#ffffcc" surfaceScale="1" specularConstant="1" specularExponent="4" result="specularOutput">
+      </feSpecularLighting>
+
+      <feComposite in="specularOutput" in2="SourceGraphic" operator="in" result="specularOutput" />
+      <feComposite in="specularOutput" in2="SourceGraphic" operator="arithmetic" k1="0" k="1" k3="1" k4="0" />
+
+      </filter>
+      </defs>
+
+      <use xlink:href="#flower" transform="translate(0,0)" style="filter: url(#flood-filter)" />
+      <use xlink:href="#flower" transform="translate(150,0)" style="filter: url(#tile-filter)" />
+      <image xlink:href="http://gw.alicdn.com/bao/uploaded/TB13pe5JVXXXXb7XXXXXXXXXXXX-600-399.jpg" x="300" y="10" width="32" height="32" />
+
+      <circle id="green-light" cx="400" cy="50" r="30" sytle="fill:#060; filter: url(#diff-light);" />
+      <circle id="green-light" cx="400" cy="120" r="30" sytle="fill:#060; filter: url(#spec-light);" />
+    </svg>
+
+    <!----------------------- feMorphology ---------------------->
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <defs>
+      <g id="cat" stroke-width="2">
+      <!-- drawing of cat goes here -->
+      <circle cx="70" cy="95" r="50" style="stroke: black; fill: none;" />
+      <circle cx="55" cy="80" r="5" stroke="black" fill="#339933" />
+      <circle cx="85" cy="80" r="5" stroke="black" fill="#339933" />
+      <g id="whiskers">
+      <line x1="75" y1="95" x2="135" y2="85" style="stroke: black;" />
+      <line x1="75" y1="95" x2="135" y2="105" style="stroke: black;" />
+      </g>
+      <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)" />
+      <!-- ears -->
+      <polyline points="108 62,  90 10,  70 45,  50, 10,  32, 62" style="stroke: black; fill: none;" />
+      <!-- mouth -->
+      <polyline points="35 110, 45 120, 95 120, 105, 110" style="stroke: black; fill: none;" />
+      <!-- nose -->
+      <path d="M 75 90 L 65 90 A 5 10 0  0 0 75 90" style="stroke: black; fill: #ffcccc" />
+      </g>
+
+      <filter id="morphology">
+      <feMorphology operator="erode" radius="1" />
+      </filter>
+      <filter id="morphology2">
+      <feMorphology operator="dilate" radius="1" />
+      </filter>
+      </defs>
+
+      <use xlink:href="#cat" />
+      <text x="75" y="170" style="text-anchor: middle;">Normal</text>
+      <text x="225" y="170" style="text-anchor: middle;">Erode</text>
+      <text x="375" y="170" style="text-anchor: middle;">Dilate</text>
+
+      <use xlink:href="#cat" transform="translate(150,0)" style="filter: url(#morphology);" />
+      <use xlink:href="#cat" transform="translate(300,0)" style="filter: url(#morphology2);" />
+    </svg>
+
+    <!----------------------- feConvolveMatrix & feDisplacementMap ---------------------->
+    <svg width="500px" height="200px" viewBox="0 0 500 200">
+      <defs>
+      <filter id="convolve">
+      <feConvolveMatrix preserveAlpha="true" kernelMatrix=" 1 0 0 0 0 0 0 0 -1" bias="0.15"></feConvolveMatrix>
+      </filter>
+
+      <!--feDispalcementMap-->
+      <linearGradient id="gradient">
+      <stop offset="0" style="stop-color: #ff0000;" />
+      <stop offset="0.5" style="stop-color: #00ff00;" />
+      <stop offset="1" style="stop-color: #0000ff;" />
+      </linearGradient>
+
+      <rect id="rectangle" x="0" y="0" width="100" height="200" style="fill:url(#gradient)" />
+
+      <filter id="displace">
+      <feImage xlink:href="#rectangle" result="grad" />
+      <feDisplacementMap scale="10" xChannelSelector="R" yChannelSelector="G" in="SouceGraphic" in2="grad"></feDisplacementMap>
+      </filter>
+
+      <filter id="self-displace">
+      <feDisplacementMap scale="10" xChannelSelector="R" yChannelSelector="G" in="SouceGraphic" in2="SouceGraphic"></feDisplacementMap>
+      </filter>
+      </defs>
+
+      <use xlink:href="#flower" style="filter: url(#convolve);" />
+      <use xlink:href="#flower" transform="translate(150,0)" style="filter: url(#displace);" />
+      <use xlink:href="#flower" transform="translate(300,0)" style="filter: url(#self-displace);" />
+    </svg>
+
+    <!----------------------- feTurbulence ---------------------->
+    <svg width="500px" height="300px" viewBox="0 0 500 300">
+      <defs>
+      <filter id="turbFilter1">
+      <feTurbulence type="turbulence" baseFrequency="0.1" numOctaves="1" in="SourceGraphic" />
+      </filter>
+      <filter id="turbFilter2">
+      <feTurbulence type="turbulence" baseFrequency="0.1" numOctaves="5" in="SourceGraphic" />
+      </filter>
+      <filter id="turbFilter3">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="5" in="SourceGraphic" />
+      </filter>
+      <filter id="turbFilter4">
+      <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" in="SourceGraphic" />
+      </filter>
+      <filter id="turbFilter5">
+      <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="5" in="SourceGraphic" />
+      </filter>
+      <filter id="turbFilter6">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="5" in="SourceGraphic" />
+      </filter>
+      </defs>
+
+      <g style="font-family: sans-serif; font-size: 12pt">
+      <g transform="translate(10,20)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter1);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.1"</text>
+      <text x="0" y="100">numOctaves="1"</text>
+      </g>
+      <g transform="translate(150,20)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter2);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.1"</text>
+      <text x="0" y="100">numOctaves="5"</text>
+      </g>
+      <g transform="translate(300,20)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter3);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.05"</text>
+      <text x="0" y="100">numOctaves="5"</text>
+      </g>
+      <g transform="translate(10,200)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter4);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.1"</text>
+      <text x="0" y="100">numOctaves="1"</text>
+      </g>
+      <g transform="translate(150,200)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter5);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.1"</text>
+      <text x="0" y="100">numOctaves="5"</text>
+      </g>
+      <g transform="translate(300,200)">
+      <rect x="25" y="0" width="50" height="50" style="filter: url(#turbFilter6);" />
+      <text x="0" y="70">type="turbulence"</text>
+      <text x="0" y="85">baseFrequency="0.05"</text>
+      <text x="0" y="100">numOctaves="5"</text>
+      </g>
+      </g>
+    </svg>
+  </body>
+</html>
