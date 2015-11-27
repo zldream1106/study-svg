@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chapter 12. Animating SVG</title>
+    <style>
+svg {
+  background: lightblue;
+  border: thick double navy;
+}
+
+.starStyle {
+  animation-name: starAnim;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: 4;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+
+  @keyframes starAnim {
+    0% {
+      fill-opacity: 1.0;
+      stroke-width: 0;
+    }
+    100% {
+      fill-opacity: 0;
+      stroke-width: 6;
+    }
+  }
+  /***********************/
+
+  .starStyle2 {
+    animation-name: starAnim2;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: 4;
+    animation-direction: alternate;
+    animation-play-state: running;
+  }
+
+  @keyframes starAnim2 {
+    0 % {
+      fill-opacity: 1.0;
+      stroke-width: 0;
+    }
+    20 % {
+      transform: translate(100px, 50px)
+    }
+    50 % {
+      transform: translate(100px, 50px) rotate(180deg)
+    }
+    80 % {
+      transform: translate(100px, 50px) rotate(360deg)
+    }
+    100 % {
+      fill-opacity: 0.0;
+      stroke-width: 6;
+    }
+  }
+    </style>
+  </head>
+  <body>
+    <svg width="250" height="150">
+      <rect x="10" y="10" width="200" height="20" stroke="black" fill="none">
+      <animate id="animation" attributeName="width" attributeType="XML" from="200" to="20" begin="0s" dur="5s" fill="freeze" />
+      </rect>
+      <rect x="10" y="40" width="20" height="20" style="stroke: black; fill: green; style: fill-opacity: 0.25;">
+      <animate attributeName="width" attributeType="XML" from="20" to="200" begin="0s" dur="8s" fill="freeze" />
+      <animate attributeName="height" attributeType="XML" from="20" to="50" begin="0s" dur="8s" fill="freeze" />
+      <animate attributeName="fill-opacity" attributeType="CSS" from="0.25" to="1" begin="0s" dur="3s" fill="freeze" />
+      <animate attributeName="fill-opacity" attributeType="CSS" from="1" to="0.25" begin="3s" dur="3s" fill="freeze" />
+      </rect>
+    </svg>
+
+    <svg width="250" height="150">
+      <rect x="10" y="10" width="20" height="20" style="stroke: black; fill: #cfc;">
+      <animate attributeName="width" attributeType="XML" begin="0s" dur="8s" from="20" to="120" fill="freeze" />
+      <animate attributeName="height" attributeType="XML" begin="0s" dur="8s" from="20" to="120" fill="freeze" />
+      </rect>
+
+      <circle cx="70" cy="70" r="20" style="fill: #ccf; stroke: black;">
+      <animate attributeName="r" attributeType="XML" begin="2s" dur="4s" from="20" to="50" fill="freeze" />
+      </circle>
+    </svg>
+
+
+    <svg width="250" height="150">
+      <circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;">
+      <animate id="c1" attributeName="r" attributeType="XML" begin="2s" dur="4s" from="30" to="10" fill="freeze" />
+      </circle>
+
+      <circle cx="120" cy="60" r="10" style="fill: #909; stroke: gray;">
+      <animate attributeName="r" attributeType="XML" begin="c1.end" dur="4s" from="10" to="30" fill="freeze" />
+      </circle>
+
+      <circle cx="200" cy="40" r="10" style="fill: #9f9; stroke: gray;">
+      <animate attributeName="r" attributeType="XML" begin="c1.begin+1.25s" dur="4s" from="10" to="30" fill="freeze" />
+      </circle>
+
+      <circle cx="200" cy="120" r="6" style="fill: #0f9; stroke: gray;">
+      <animate attributeName="r" attributeType="XML" begin="3s" dur="4s" end="5s" from="10" to="30" fill="freeze" />
+      </circle>
+
+    </svg>
+
+
+    <svg width="250" height="150" viewBox="0 0 350 120">
+      <circle cx="60" cy="60" r="30" style="fill: none; stroke: red;">
+      <animate attributeName="cx" attributeType="XML" begin="0s" dur="5s" repeatCount="2" from="60" to="260" fill="freeze" />
+      </circle>
+
+      <circle cx="260" cy="90" r="30" style="fill: #ccf; stroke: black;">
+      <animate attributeName="cx" attributeType="XML" begin="0s" dur="5s" repeatDur="8s" from="260" to="60" fill="freeze" />
+      </circle>
+    </svg>
+
+
+    <svg width="250" height="150" viewBox="0 0 350 120">
+      <circle cx="60" cy="60" r="15" style="fill: none; stroke: red;">
+      <animate id="circleAnim" attributeName="cx" attributeType="XML" begin="0s" dur="5s" repeatCount="3" from="60" to="260" fill="freeze" />
+      </circle>
+
+      <rect x="230" y="80" width="60" height="30" style="fill: #ccf; stroke: black;">
+      <animate attributeName="x" attributeType="XML" begin="circleAnim.repeat(1)+2.5s" dur="5s" from="230" to="30" fill="freeze" />
+      </rect>
+    </svg>
+
+    <svg width="250" height="150" viewBox="0 0 350 120">
+      <circle cx="60" cy="60" r="30" style="fill: #ff9; stroke: gray; stroke-width: 10;">
+      <animate attributeName="fill" begin="2s" dur="4s" from="#ff9" to="red" fill="freeze" />
+      <animate attributeName="stroke" begin="2s" dur="4s" from="gray" to="blue" fill="freeze" />
+      </circle>
+
+      <g id="path_poly" transform="translate(100, 0)">
+      <polygon points="30 30 70 30 90 70 10 70" style="fill:#fcc; stroke:black">
+      <animate id="animation" attributeName="points" attributeType="XML" to="50 30 70 50 50 90 30 50" begin="0s" dur="5s" fill="freeze" />
+      </polygon>
+      <path d="M15 50 Q 40 15, 50 50, 65 32, 100 40" style="fill:none; stroke: black" transform="translate(0,50)">
+      <animate attributeName="d" attributeType="XML" to="M50 15 Q 15 40, 50 50, 32 65, 40 100" begin="0s" dur="5s" fill="freeze" />
+      </path>
+      </g>
+
+      <circle cx="230" cy="50" r="30" style="fill: #ff9; stroke:black;">
+      <animate attributeName="fill" begin="2s" dur="4s" values="#ff9;#99f;#f99;#9f9" fill="freeze" />
+      </circle>
+
+      <g transform=translate(250,0)>
+      <circle cx="60" cy="60" r="30" style="fill: #ff9; stroke: gray;">
+      <animate id="c1" attributeName="r" attributeType="XML" begin="0s" dur="4s" from="30" to="0" fill="freeze" />
+      </circle>
+
+      <text text-anchor="middle" x="60" y="60" style="visibility: hidden;">
+        <set attributeName="visibility" attributeType="CSS" to="visible" begin="4.5s" dur="1s" fill="freeze" /> All gone!
+      </text>
+      </g>
+    </svg>
+
+    <svg width="250" height="150" viewBox="0 0 350 120">
+      <g transform="translate(100,60)">
+      <rect x="-10" y="-10" width="20" height="20" style="fill: #ff9; stroke: black;">
+      <animateTransform attributeType="XML" attributeName="transform" type="scale" from="1" to="4 2" begin="0s" dur="4s" fill="freeze" />
+      </rect>
+      </g>
+      <g transform="translate(250, 60)">
+      <rect x="-10" y="-10" width="20" height="20" style="fill: #ff9; stroke: black;">
+      <animateTransform attributeName="transform" attributeType="XML" type="scale" from="1" to="4 2" additive="sum" begin="0s" dur="4s" fill="freeze" />
+      <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0" to="45" additive="sum" begin="0s" dur="4s" fill="freeze" />
+      </rect>
+      </g>
+    </svg>
+
+
+    <svg width="250" height="150" viewBox="0 0 350 120">
+      <!-- show the path along which the triangle will move -->
+      <path d="M50,125 C 100,25 150,225, 200, 125" style="fill: none; stroke: blue;" />
+
+      <!-- Triangle to be moved along the motion path.
+        It is defined with an upright orientation with the base of
+        the triangle centered horizontally just above the origin. -->
+        <path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;">
+        <animateMotion path="M50,125 C 100,25 150,225, 200, 125" dur="6s" fill="freeze" />
+        </path>
+
+        <g transform="translate(0,-50)">
+        <!-- show the path along which the triangle will move -->
+        <path d="M50,125 C 100,25 150,225, 200, 125" style="fill: none; stroke: blue;" />
+
+        <!-- Triangle to be moved along the motion path.
+          It is defined with an upright orientation with the base of
+          the triangle centered horizontally just above the origin. -->
+          <path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;">
+          <animateMotion path="M50,125 C 100,25 150,225, 200, 125" rotate="auto" dur="6s" fill="freeze" />
+        </g>
+
+        <g transform="translate(0,-100)">
+        <!-- show the path along which the triangle will move -->
+        <path d="M50,125 C 100,25 150,225, 200, 125" style="fill: none; stroke: blue;" />
+
+        <!-- Triangle to be moved along the motion path.
+          It is defined with an upright orientation with the base of
+          the triangle centered horizontally just above the origin. -->
+          <path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;">
+          <animateMotion path="M50,125 C 100,25 150,225, 200, 125" rotate="auto" keyPoints="0;0.2;0.8;1" keyTimes="0;0.33;0.66;1" calcMode="linear" dur="6s" fill="freeze" />
+          </path>
+        </g>
+    </svg>
+
+    <svg width="250" height="150" viewBox="0 0 350 300">
+      <g id="svgBlock" width="200" height="200" viewBox="0 0 200 200">
+      <defs>
+      <g id="starDef">
+      <path d="M 38.042 -12.361 9.405 -12.944 -0.000 -40.000
+      -9.405 -12.944 -38.042 -12.361 -15.217 4.944
+      -23.511 32.361 0.000 16.000 23.511 32.361 15.217 4.944 Z"></path>
+      </g>
+      </defs>
+
+      <use id="star" class="starStyle" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#starDef" transform="translate(100, 100)" style="fill: #008000; stroke: #008000"></use>
+      <use id="star2" class="starStyle2" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#starDef" transform="translate(250, 100)" style="fill: #008000; stroke: #008000"></use>
+      </g>
+    </svg>
+  </body>
+</html>
